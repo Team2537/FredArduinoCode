@@ -1,3 +1,4 @@
+//Current version on the collar as of 3-19-2026!
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 3
