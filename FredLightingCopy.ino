@@ -1,4 +1,4 @@
-//Absolute version on the collar as of 3-24-2026!
+//Current version on the collar as of 3-19-2026!
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 3
@@ -16,23 +16,30 @@ int blue[56];
   int select = 0;
   int i,j;
   int element[8][3];
-
+boolean change;
 
 void setup() {
   // put your setup code here, to run once:
    strip.begin();
   strip.show(); // Initialize all pixels to 'off'
+  change = false;
 
 
  randomSeed(analogRead(A1));
 }
 
 boolean check(){
-  boolean change = false;
   int sensorValue=analogRead(sensorPin);
-  if (sensorValue < 512) {select++; change = true;}
+  if (sensorValue < 512 && !change) {
+    change = true;
+    select++;
+  } else {
+
+    change = false;
+    
+  }
+  
   if (select > 4) select = 0;
-  delay(67);
   return change;
 }
 
@@ -130,7 +137,7 @@ void loop() {
     else if (select == 3) blueBandTask(i);
     else if (select == 4) redBandTask(i);
     if (check()) {clearStrip(); break;}
-    delay(20);
+    delay(18);
    }
   
   }
@@ -142,4 +149,4 @@ void loop() {
 
 
 
-int cigarettes = 500;
+int cigarettes = 0;
