@@ -1,4 +1,4 @@
-//Current version on the collar as of 3-19-2026!
+//Absolute version on the collar as of 3-24-2026!
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 3
@@ -32,6 +32,7 @@ boolean check(){
   int sensorValue=analogRead(sensorPin);
   if (sensorValue < 512) {select++; change = true;}
   if (select > 4) select = 0;
+  delay(67);
   return change;
 }
 
@@ -48,15 +49,14 @@ void greenChaserTask(int i){
   int chaser_len = 5;
 
   strip.setPixelColor(i, 0, 125, 0);
-  int prev_led;
-  if (i < chaser_len) {
-    prev_led = NUM_OF_LEDS - chaser_len + i;
-  } else {
-    prev_led = i - chaser_len;
-  }
 
-  strip.setPixelColor(prev_led, 0, 0, 0);
-  strip.setPixelColor(i, 0, 125, 0);
+  if (i < chaser_len) {
+    
+    strip.setPixelColor((i-chaser_len+56)%56, 0, 0, 0);
+    
+  }
+  
+  strip.setPixelColor(i-chaser_len, 0, 0, 0);
   strip.setBrightness(140);
   strip.show();
 }
@@ -75,6 +75,7 @@ void randomLightsTask(int i){
      blue[b] = random(255);
     }
   }
+  
   strip.setPixelColor(i, red[i], green[i], blue[i]);
 
   for (int r = 0; r < 56; r++) {
@@ -129,7 +130,16 @@ void loop() {
     else if (select == 3) blueBandTask(i);
     else if (select == 4) redBandTask(i);
     if (check()) {clearStrip(); break;}
-    delay(10);
+    delay(20);
    }
-  delay(500);
+  
   }
+
+
+
+
+
+
+
+
+int cigarettes = 500;
