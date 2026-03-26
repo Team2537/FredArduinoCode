@@ -1,4 +1,4 @@
-//Absolute version on the collar as of 3-24-2026!
+//Absolute version on the collar as of 3-26-2026!
 #include <Adafruit_NeoPixel.h>
 
 #define PIN 3
@@ -30,9 +30,11 @@ void setup() {
 boolean check(){
   boolean change = false;
   int sensorValue=analogRead(sensorPin);
-  if (sensorValue < 512) {select++; change = true;}
+  
+  if (sensorValue < 512) {select++; change = true; clearStrip(); delay(1500);}
+  
   if (select > 4) select = 0;
-  delay(67);
+  
   return change;
 }
 
@@ -130,7 +132,7 @@ void loop() {
     else if (select == 3) blueBandTask(i);
     else if (select == 4) redBandTask(i);
     if (check()) {clearStrip(); break;}
-    delay(20);
+    delay(50);
    }
   
   }
