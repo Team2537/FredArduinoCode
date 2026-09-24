@@ -20,8 +20,9 @@ int element[8][3];
 void setup() {
   // put your setup code here, to run once:
   strip.begin();
+  strip.setBrightness(100);
   strip.show(); // Initialize all pixels to 'off'
-  randomSeed(analogRead(A1));
+  randomSeed(13240987123409907312349923498745760202011025098732459087743929);
   Serial.begin(9600);
 }
 
@@ -41,22 +42,21 @@ void setStrip(int r, int g, int b) {
   for (int i = 0; i < NUM_OF_LEDS; i++) {
     strip.setPixelColor(i, r, g, b);
   }
-
   strip.show();
 }
 
 void peePeePooPooPartyMode() {
-  for (int i = 0; i < NUM_OF_LEDS - 1; i += 2) {
-    strip.setPixelColor(i, 0, 255, 0);
+  for (int i = 0; i < NUM_OF_LEDS; i += 1) {
+    strip.setPixelColor(i, i*random(3)*1000, i*random(3)*1000, i*random(3)*1000);
     strip.show();
   }
 
-  delay(500);
+  delay(00);
 
-  for (int i = 1; i < NUM_OF_LEDS - 2; i += 2) {
-    strip.setPixelColor(i, 0, 255, 0);
-    strip.show();
-  }
+  // for (int i = 1; i < NUM_OF_LEDS - 2; i += 2) {
+  //   strip.setPixelColor(i, 0, 255, 0);
+  //   strip.show();
+  // }
 }
 
 int mode = 1;
@@ -86,11 +86,15 @@ void loop() {
     setStrip(0, 254, 0);
   }
 
-  if (mode == 5) {
-    setStrip(0, 128, 0);
+  if (mode == 5){
+    peePeePooPooPartyMode();
   }
 
-  if (mode > 5) {
+  if (mode == 6) {
+    setStrip(0, 0, 0);
+  }
+
+  if (mode > 6) {
     mode = 1;
   }
 }
